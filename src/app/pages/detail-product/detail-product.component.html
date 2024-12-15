@@ -1,0 +1,23 @@
+@let product = productDetail();
+<section class="product-detail">
+  <div class="back-button-container">
+    <a mat-icon-button routerLink="/" aria-label="Volver" class="back-button">
+      <mat-icon fontIcon="arrow_back" />
+    </a>
+  </div>
+  <div class="product-content">
+    <div class="product-image">
+      <img mat-card-image [src]="product.image" [alt]="product.name" />
+    </div>
+    <div class="product-info">
+      <h2>{{ product.name }}</h2>
+      <p class="description">{{ product.description }}</p>
+      <p class="price">{{ product.price | currency }}</p>
+      <mat-card-actions>
+        <button mat-raised-button (click)="addToCart()">
+          <mat-icon fontIcon="shopping_cart" /> Agregar al carrito
+        </button>
+      </mat-card-actions>
+    </div>
+  </div>
+</section>

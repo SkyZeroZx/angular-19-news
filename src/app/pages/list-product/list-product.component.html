@@ -2,21 +2,23 @@
 
    @if(firstLoad()) {
        <ng-container  *ngTemplateOutlet="skeleton"  />
+       
    } @else {
  
            @for (product of products() ; track product.id) {
+
                @defer (hydrate on hover) {
                   <app-card-product [product]="product" />
                }      
                @placeholder {
                  <ngx-skeleton-loader   
                      [theme]="{
-                        'border-radius': '15px',
-                        height : '469px',
-                        width : '300px',
-                     }"
-                     />
-               }   
+                     'border-radius': '15px',
+                     height : '469px',
+                     width : '300px',
+                     }"/>
+               }
+
          } 
            
       } 
