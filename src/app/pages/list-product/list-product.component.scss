@@ -1,0 +1,12 @@
+.list-products {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 2rem;
+  padding: 2rem;
+  justify-content: center;
+
+  @media (width >= 768px) {
+    flex-direction: row;
+  }
+}

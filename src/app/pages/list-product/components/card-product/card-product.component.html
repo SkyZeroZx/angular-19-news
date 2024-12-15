@@ -1,0 +1,18 @@
+@let item = product();
+
+<mat-card class="product-card">
+  <div class="product-card__image">
+    <img [ngSrc]="item.image" [alt]="item.name" width="200" height="200" />
+  </div>
+
+  <mat-card-content>
+    <h3>{{ item.name }}</h3>
+    <p>{{ item.description }}</p>
+    <p class="product-card__price">Price: ${{ item.price }}</p>
+  </mat-card-content>
+
+  <mat-card-actions>
+    <button mat-raised-button>Buy Now</button>
+    <button mat-button>View Details</button>
+  </mat-card-actions>
+</mat-card>
