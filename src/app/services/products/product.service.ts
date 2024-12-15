@@ -6,11 +6,13 @@ import { inject, Injectable } from '@angular/core';
 
 import { environment } from '../../../environments/environment';
 import {
-  PaginationAPI,
   PaginationOptions,
+  PaginationResult,
   Product,
   ProductCard,
+  ProductRAW,
 } from '../../core/interfaces';
+import { createPaginationMetaData, toProductCard } from '../../core/util';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +21,9 @@ export class ProductService {
   private readonly http = inject(HttpClient);
 
   @Cacheable()
-  getProducts(paginationOptions: PaginationOptions): Observable<ProductCard[]> {
+  getProducts(
+    paginationOptions: PaginationOptions
+  ): Observable<PaginationResult<ProductCard>> {
     let params = new HttpParams();
 
     params = params.append('limit', paginationOptions.limit ?? '10');
@@ -27,30 +31,19 @@ export class ProductService {
     params = params.append('skip', paginationOptions.skip ?? '0');
 
     return this.http
-      .get<PaginationAPI>(`${environment.API_URL}/products`, { params })
+      .get<ProductRAW>(`${environment.API_URL}/products`, { params })
       .pipe(
-        map((res) =>
-          res.products.map((product) => ({
-            id: product.id,
-            image: product.images.at(0) || '',
-            name: product.title,
-            description: product.description,
-            price: product.price,
-          }))
-        )
+        map((res) => ({
+          data: res.products.map(toProductCard),
+          meta: createPaginationMetaData(res.total, res.skip, res.limit),
+        }))
       );
   }
 
   @Cacheable()
   findById(id: number | string): Observable<ProductCard> {
-    return this.http.get<Product>(`${environment.API_URL}/products/${id}`).pipe(
-      map((product) => ({
-        id: product.id,
-        image: product.images.at(0) || '',
-        name: product.title,
-        description: product.description,
-        price: product.price,
-      }))
-    );
+    return this.http
+      .get<Product>(`${environment.API_URL}/products/${id}`)
+      .pipe(map(toProductCard));
   }
 }

@@ -23,7 +23,7 @@ export interface Product {
   thumbnail: string;
 }
 
-export interface PaginationAPI {
+export interface ProductRAW {
   products: Product[];
   limit: number;
   skip: number;
