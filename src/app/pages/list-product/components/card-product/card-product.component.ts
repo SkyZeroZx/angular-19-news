@@ -7,11 +7,11 @@ import { ProductCard } from '../../../../core/interfaces';
 
 @Component({
   selector: 'app-card-product',
-  imports: [MatCardModule, MatButtonModule , NgOptimizedImage],
+  imports: [MatCardModule, MatButtonModule, NgOptimizedImage],
   templateUrl: './card-product.component.html',
   styleUrl: './card-product.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CardProductComponent {
-  product = input.required<ProductCard>();
+  readonly product = input.required<ProductCard>();
 }

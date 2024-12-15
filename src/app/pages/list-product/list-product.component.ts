@@ -2,20 +2,15 @@ import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { filter, take, tap } from 'rxjs';
 
 import { NgTemplateOutlet } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  inject,
-  signal,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { rxResource, toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 
 import { PAGINATION_DEFAULT } from '../../core/constants';
 import { PaginationOptions, ProductCard } from '../../core/interfaces';
-import { ProductService } from '../../services/products/product.service';
+import { ProductService } from '../../services/products';
 import { ScrollEndDirective } from '../../shared/directives/scroll-end';
-import { CardProductComponent } from './components/card-product/card-product.component';
+import { CardProductComponent } from './components/card-product';
 
 @Component({
   selector: 'app-list-product',
