@@ -1,60 +1,45 @@
 import {
+  DestroyRef,
   Directive,
   ElementRef,
   NgZone,
-  OnDestroy,
   afterNextRender,
-  input,
+  inject,
   output,
 } from '@angular/core';
-import { Subscription, fromEvent } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { fromEvent } from 'rxjs';
 
 @Directive({
   selector: '[scrollEnd]',
 })
-export class ScrollEndDirective implements OnDestroy {
-  nearEnd = output<void>();
-  private subscription!: Subscription;
+export class ScrollEndDirective {
+  readonly nearEnd = output<void>();
 
-  elementClass = input<string>();
+  private readonly el = inject(ElementRef);
+  private readonly ngZone = inject(NgZone);
+  private readonly destroyRef = inject(DestroyRef);
 
-  constructor(
-    private readonly el: ElementRef,
-    private readonly ngZone: NgZone
-  ) {
+  constructor() {
     afterNextRender(() => {
       this.runOutSide(() => {
-        const getElement = () => {
-          if (this.elementClass()) {
-            return (
-              document?.querySelector(`.${this.elementClass()}`) ?? document
-            );
-          }
-          return document;
-        };
-        const elementMemorized = getElement();
-        const isCustomElement = getElement() instanceof Element;
-
-        this.subscription = fromEvent(elementMemorized, 'scroll', {
+        const scroll$ = fromEvent(document, 'scroll', {
           passive: true,
-        }).subscribe(() => {
+        }).pipe(takeUntilDestroyed(this.destroyRef));
+
+        scroll$.subscribe(() => {
           // height of whole window page
-          // const heightOfWholePage = document?.querySelector(`.${this.elementClass()}`).scrollHeight;
           const heightOfWholePageWindow =
             window.document.documentElement.scrollHeight;
 
-          const heightOfWholeObserver = isCustomElement
-            ? elementMemorized['scrollHeight']
-            : window.document.documentElement.scrollHeight;
+          const heightOfWholeObserver =
+            window.document.documentElement.scrollHeight;
           // how big in pixels the element is
           const heightOfElement = this.el.nativeElement.scrollHeight;
 
           // currently scrolled Y position
 
-          const currentScrolledY = isCustomElement
-
-            ? elementMemorized['scrollTop']
-            : window.scrollY;
+          const currentScrolledY = window.scrollY;
 
           // height of opened window - shrinks if console is opened
           const innerHeight = window.innerHeight;
@@ -71,21 +56,14 @@ export class ScrollEndDirective implements OnDestroy {
             innerHeight -
             currentScrolledY +
             spaceOfElementAndPage;
-          const divider = isCustomElement ? 20 : 3;
           // if the user is near end
-          if (scrollToBottom < heightOfWholePageWindow / divider) {
+          if (scrollToBottom < heightOfWholePageWindow / 3) {
             this.runInZone(() => {
               this.nearEnd.emit();
             });
           }
         });
       });
-    });
-  }
-
-  ngOnDestroy(): void {
-    this.runInZone(() => {
-      this.subscription?.unsubscribe?.();
     });
   }
 
