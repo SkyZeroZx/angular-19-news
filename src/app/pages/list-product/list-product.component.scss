@@ -10,3 +10,12 @@
     flex-direction: row;
   }
 }
+
+.product-error {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+  align-items: center;
+  text-align: center;
+}

@@ -1,5 +1,5 @@
 export const environment = {
-  API_URL: '`https://dummyjson.com',
+  API_URL: 'https://dummyjson.com',
   httpCache: {
     /**
      * maxAge of cache in milliseconds

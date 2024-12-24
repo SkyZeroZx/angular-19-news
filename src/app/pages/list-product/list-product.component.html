@@ -27,17 +27,24 @@
    @if(listProducts.isLoading()) {
        <ng-container  *ngTemplateOutlet="skeleton"  />
    }
+ 
+   @if(endOfList()) {
+      <p>End of list products</p>
+   }
 
 </section>
 
 @if(listProducts.error()) { 
-   <p>Something went wrong, please try again.</p>
-   <button mat-raised-button (click)="listProducts.reload()" > Reload </button>
+   <section class="product-error">
+       <p>Something went wrong, please try again.</p>
+       <button mat-raised-button (click)="listProducts.reload()" > Reload <mat-icon  fontIcon="refresh"/> </button>
+   </section>
+
 }
 
 <ng-template #skeleton>
    <div class="list-products">
-      @for (_ of [].constructor(5); track $index) {     
+      @for (_ of [].constructor(4); track $index) {     
           <ngx-skeleton-loader   
             [theme]="{
                'border-radius': '15px',
@@ -46,5 +53,4 @@
             }"/>
       }
    </div>
-  
 </ng-template>

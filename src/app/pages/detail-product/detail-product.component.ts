@@ -1,5 +1,6 @@
 import { map } from 'rxjs';
 
+import { CurrencyPipe, NgOptimizedImage } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -13,11 +14,17 @@ import { MatIconModule } from '@angular/material/icon';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 
 import { ProductCard } from '../../core/interfaces';
-import { CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-detail-product',
-  imports: [RouterLink, MatButtonModule, MatCardModule, MatIconModule , CurrencyPipe],
+  imports: [
+    RouterLink,
+    MatButtonModule,
+    MatCardModule,
+    MatIconModule,
+    CurrencyPipe,
+    NgOptimizedImage,
+  ],
   templateUrl: './detail-product.component.html',
   styleUrl: './detail-product.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
