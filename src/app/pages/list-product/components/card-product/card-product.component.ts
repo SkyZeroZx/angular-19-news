@@ -1,10 +1,16 @@
 import { NgOptimizedImage } from '@angular/common';
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  input,
+} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { RouterLink } from '@angular/router';
 
 import { ProductCard } from '../../../../core/interfaces';
+import { ShopCartService } from '../../../../services/shop-cart';
 
 @Component({
   selector: 'app-card-product',
@@ -14,5 +20,13 @@ import { ProductCard } from '../../../../core/interfaces';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CardProductComponent {
+  private readonly shopCartService = inject(ShopCartService);
   readonly product = input.required<ProductCard>();
+
+  addToCard() {
+    this.shopCartService.add({
+      ...this.product(),
+      quantity: 1,
+    });
+  }
 }
