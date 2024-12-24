@@ -1,11 +1,16 @@
 <section class="nav-bar">
-  <button mat-button>
-    <mat-icon fontIcon="check_circle" class="icon-lg" routerLink="/" />
+  <a mat-button routerLink="/products">
+    <mat-icon fontIcon="apps" class="icon-lg" />
     Products
-  </button>
+  </a>
+
+  <a mat-button routerLink="/check-out">
+    <mat-icon fontIcon="check_circle_outline" class="icon-lg" />
+    Check Out
+  </a>
 
   <button mat-button>
-    <mat-icon fontIcon="fingerprint" class="icon-lg" routerLink="/check-out" />
-    Check Out
+    <mat-icon fontIcon="shopping_cart" class="icon-lg" />
+    Cart ({{ counter() }})
   </button>
 </section>
