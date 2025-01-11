@@ -5,6 +5,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 
 import { environment } from '../../../environments/environment';
+import { PAGINATION_DEFAULT } from '../../core/constants';
 import {
   PaginationOptions,
   PaginationResult,
@@ -22,7 +23,7 @@ export class ProductService {
 
   @Cacheable()
   getProducts(
-    paginationOptions: PaginationOptions
+    paginationOptions: PaginationOptions = PAGINATION_DEFAULT
   ): Observable<PaginationResult<ProductCard>> {
     let params = new HttpParams();
 
