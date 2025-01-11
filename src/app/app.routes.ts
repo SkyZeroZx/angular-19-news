@@ -24,10 +24,14 @@ export const appRoutes: Route[] = [
           },
         ],
       },
-
       {
         path: 'check-out',
         loadComponent: () => import('./pages/check-out/check-out.component'),
+      },
+      {
+        path: 'router-context',
+        loadComponent: () =>
+          import('./pages/router-context/router-context.component'),
       },
     ],
   },

@@ -1,0 +1,1 @@
+export const CUSTOM_ROUTER_DATA = 'CUSTOM_ROUTER_DATA';
