@@ -16,7 +16,7 @@ import { fromEvent } from 'rxjs';
 export class ScrollEndDirective {
   readonly nearEnd = output<void>();
 
-  private readonly el = inject(ElementRef);
+  private readonly el: ElementRef<HTMLElement> = inject(ElementRef);
   private readonly ngZone = inject(NgZone);
   private readonly destroyRef = inject(DestroyRef);
 
